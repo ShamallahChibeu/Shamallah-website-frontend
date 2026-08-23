@@ -1,24 +1,4 @@
-const projects = [
-  {
-    title: "House Price Predictor",
-    description: "ML model estimating house prices from structured data using scikit-learn.",
-    tech: ["Python", "Pandas", "Scikit-learn"],
-    status: "In progress",
-  },
-  {
-    title: "This Website",
-    description: "A self-built CMS — FastAPI backend, Next.js frontend, PostgreSQL database.",
-    tech: ["FastAPI", "Next.js", "PostgreSQL"],
-    status: "In progress",
-  },
-];
-
-const posts = [
-  {
-    title: "How I Built My First Machine Learning Model",
-    excerpt: "A walkthrough of my first ML project.",
-  },
-];
+import { getProjects, getPosts } from "@/lib/api";
 
 const journey = [
   { date: "2026", label: "Started Python" },
@@ -28,7 +8,13 @@ const journey = [
   { date: "2026", label: "Shipped first frontend" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const allProjects = await getProjects();
+  const allPosts = await getPosts();
+
+  const projects = allProjects.filter((p) => p.status === "published");
+  const posts = allPosts.filter((p) => p.status === "published");
+
   return (
     <main className="min-h-screen bg-ink text-paper">
       <nav className="flex items-center justify-between px-6 py-5 md:px-12 border-b border-white/5">
@@ -57,40 +43,49 @@ export default function Home() {
 
       <section id="projects" className="px-6 py-16 md:px-12 border-t border-white/5">
         <div className="font-mono text-sm text-signal mb-8"># projects</div>
-        <div className="grid md:grid-cols-2 gap-6">
-          {projects.map((project) => (
-            <div key={project.title} className="bg-panel rounded-lg p-6 border border-white/5">
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="font-[family-name:var(--font-display)] text-xl font-medium">
-                  {project.title}
-                </h3>
-                <span className="font-mono text-xs text-accent-green">{project.status}</span>
+        {projects.length === 0 ? (
+          <p className="text-muted font-mono text-sm">No published projects yet.</p>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6">
+            {projects.map((project) => (
+              <div key={project.id} className="bg-panel rounded-lg p-6 border border-white/5">
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="font-[family-name:var(--font-display)] text-xl font-medium">
+                    {project.title}
+                  </h3>
+                  <span className="font-mono text-xs text-accent-green">{project.status}</span>
+                </div>
+                <p className="text-muted mb-4">{project.description}</p>
+                <div className="flex gap-4 font-mono text-xs">
+                  {project.github_url && (
+                    <a href={project.github_url} className="text-signal hover:underline">github →</a>
+                  )}
+                  {project.demo_url && (
+                    <a href={project.demo_url} className="text-signal hover:underline">live demo →</a>
+                  )}
+                </div>
               </div>
-              <p className="text-muted mb-4">{project.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <span key={t} className="font-mono text-xs px-2 py-1 rounded bg-white/5 text-paper/80">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <section id="journal" className="px-6 py-16 md:px-12 border-t border-white/5">
         <div className="font-mono text-sm text-signal mb-8"># journal</div>
-        <div className="space-y-4">
-          {posts.map((post) => (
-            <div key={post.title} className="border-b border-white/5 pb-4">
-              <h3 className="font-[family-name:var(--font-display)] text-lg font-medium mb-1">
-                {post.title}
-              </h3>
-              <p className="text-muted text-sm">{post.excerpt}</p>
-            </div>
-          ))}
-        </div>
+        {posts.length === 0 ? (
+          <p className="text-muted font-mono text-sm">No published posts yet.</p>
+        ) : (
+          <div className="space-y-4">
+            {posts.map((post) => (
+              <div key={post.id} className="border-b border-white/5 pb-4">
+                <h3 className="font-[family-name:var(--font-display)] text-lg font-medium mb-1">
+                  {post.title}
+                </h3>
+                <p className="text-muted text-sm">{post.excerpt}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <section id="journey" className="px-6 py-16 md:px-12 border-t border-white/5">
