@@ -20,9 +20,9 @@ export default async function Home() {
       <nav className="flex items-center justify-between px-6 py-5 md:px-12 border-b border-white/5">
         <span className="font-mono text-sm text-signal">shamallah@dev:~$</span>
         <div className="flex gap-6 font-mono text-sm text-muted">
-          <a href="#projects" className="hover:text-paper transition-colors">projects</a>
-          <a href="#journal" className="hover:text-paper transition-colors">journal</a>
-          <a href="#journey" className="hover:text-paper transition-colors">journey</a>
+          <a href="/projects" className="hover:text-paper transition-colors">projects</a>
+          <a href="/blog" className="hover:text-paper transition-colors">journal</a>
+          <a href="/journey" className="hover:text-paper transition-colors">journey</a>
         </div>
       </nav>
 
