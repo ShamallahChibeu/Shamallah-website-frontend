@@ -1,4 +1,5 @@
 import { getProjects, getPosts } from "@/lib/api";
+import { MessageCircle, Phone, Mail } from "lucide-react";
 
 const journey = [
   { date: "2026", label: "Started Python" },
@@ -102,8 +103,15 @@ export default async function Home() {
         </div>
       </section>
 
-      <footer className="px-6 py-10 md:px-12 border-t border-white/5 font-mono text-xs text-muted">
-        © 2026 Shamallah Chibeu — built with FastAPI, Next.js & PostgreSQL
+      <footer className="px-6 py-10 md:px-12 border-t border-white/5">
+        <div className="flex items-center gap-4 mb-4">
+          <a href="https://wa.me/254707351238" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-9 h-9 flex items-center justify-center rounded-full bg-panel border border-white/10 text-muted hover:text-accent-green hover:border-accent-green/40 transition-colors"><MessageCircle size={16} /></a>
+          <a href="tel:+254707351238" aria-label="Call" className="w-9 h-9 flex items-center justify-center rounded-full bg-panel border border-white/10 text-muted hover:text-signal hover:border-signal/40 transition-colors"><Phone size={16} /></a>
+          <a href="mailto:shamallah.chibeu@gmail.com" aria-label="Email" className="w-9 h-9 flex items-center justify-center rounded-full bg-panel border border-white/10 text-muted hover:text-signal hover:border-signal/40 transition-colors"><Mail size={16} /></a>
+        </div>
+        <p className="font-mono text-xs text-muted">
+          © 2026 Shamallah Chibeu — built with FastAPI, Next.js & PostgreSQL
+        </p>
       </footer>
     </main>
   );
