@@ -2,11 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProjectBySlug } from "@/lib/api";
 
-export default async function ProjectDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
 
@@ -16,7 +12,7 @@ export default async function ProjectDetailPage({
 
   return (
     <main className="min-h-screen bg-ink text-paper px-6 py-16 md:px-12 max-w-3xl mx-auto">
-      <Link href="/projects" className="font-mono text-sm text-signal hover:underline">← all projects</Link>
+      <Link href="/projects" className="font-mono text-sm text-signal hover:underline uppercase tracking-wide">← All Projects</Link>
       <h1 className="font-[family-name:var(--font-display)] text-3xl md:text-5xl font-bold mt-8 mb-4">
         {project.title}
       </h1>
