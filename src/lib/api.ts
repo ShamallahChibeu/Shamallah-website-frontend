@@ -18,7 +18,7 @@ export interface Post {
   status: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export async function getProjects(): Promise<Project[]> {
   const res = await fetch(`${API_URL}/projects`, { cache: "no-store" });
