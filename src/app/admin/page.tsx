@@ -68,7 +68,10 @@ export default function AdminDashboard() {
     <main className="min-h-screen bg-ink text-paper px-6 py-10 md:px-12">
       <div className="flex justify-between items-center mb-10">
         <h1 className="text-xl font-semibold">Dashboard</h1>
-        <button onClick={handleLogout} className="text-signal text-sm hover:underline">Log out</button>
+        <div className="flex gap-6 items-center">
+          <a href="/admin/analytics" className="text-signal text-sm hover:underline">Analytics</a>
+          <button onClick={handleLogout} className="text-signal text-sm hover:underline">Log out</button>
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-4 mb-10 max-w-lg">
