@@ -1,5 +1,6 @@
 import { getProjects, getPosts } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
+import { Fuel, Globe } from "lucide-react";
 
 export default async function Home() {
   const allProjects = await getProjects();
@@ -16,29 +17,20 @@ export default async function Home() {
           <section id="about" className="mb-16">
             <div className="text-xs tracking-widest font-semibold text-signal mb-5">ABOUT</div>
             <p className="text-paper/80 leading-relaxed mb-4">
-              Hi there! I&apos;m Shamallah, and I enjoy building things that solve real-world problems. I&apos;m an aspiring Machine Learning Engineer and Full-Stack Developer with a growing passion for turning ideas, data, and technology into intelligent and useful digital solutions. I enjoy exploring how machine learning and modern web development can work together to create products that are both powerful and practical.
+              I&apos;m Shamallah — I design and build full-stack systems, from authenticated APIs and databases to production deployments. This site is proof of that: a self-built CMS with a FastAPI backend, PostgreSQL database, JWT authentication, and an admin dashboard I built myself to manage it, running live in production.
             </p>
             <p className="text-paper/80 leading-relaxed mb-4">
-              I&apos;m currently building my skills in Python, Machine Learning, and Full-Stack Web Development while working on projects that help me apply what I learn to real-world challenges. I&apos;m particularly interested in creating intelligent applications, data-driven systems, and scalable web platforms that make technology more useful and accessible.
-            </p>
-            <p className="text-paper/80 leading-relaxed mb-4">
-              One of the things I enjoy most about technology is the process of turning an idea into something real. From understanding a problem and designing a solution to writing the code and continuously improving the final product, I&apos;m constantly learning and challenging myself to become a better builder.
-            </p>
-            <p className="text-paper/80 leading-relaxed mb-4">
-              As I continue my journey, I&apos;m focused on developing projects, expanding my technical knowledge, and building a portfolio of work that reflects my growth as a Machine Learning Engineer and Full-Stack Developer. I&apos;m excited about the possibilities ahead and always looking for the next problem worth solving.
+              Alongside building, I&apos;m deepening my machine learning skills, applying the same hands-on approach: understanding a problem, designing a solution, and shipping something real rather than stopping at theory.
             </p>
             <p className="text-paper/80 leading-relaxed">
-              Outside of coding and learning, I enjoy exploring new ideas, working on personal projects, and continuously finding new ways to challenge myself and grow.
+              I&apos;m drawn to problems where data, automation, and good engineering intersect — projects that replace manual, repetitive work with something faster and more reliable.
             </p>
           </section>
 
           <section id="experience" className="mb-16">
             <div className="text-xs tracking-widest font-semibold text-signal mb-5">EXPERIENCE</div>
-            <p className="text-paper/80 leading-relaxed mb-4">
-              I&apos;m currently focused on building my experience in Machine Learning and Full-Stack Development through continuous learning and hands-on projects. My work involves exploring real-world problems, designing practical solutions, and turning ideas into functional applications using modern technologies.
-            </p>
             <p className="text-paper/80 leading-relaxed mb-6">
-              Alongside my technical journey, I&apos;m actively developing projects that strengthen my skills in Python, Machine Learning, web development, and software engineering. Each project gives me the opportunity to move beyond theory and gain practical experience in building, testing, and improving real applications.
+              I designed and built this full-stack content management system from the ground up — a FastAPI backend with JWT authentication and a PostgreSQL database, a Next.js frontend, and an admin dashboard with visit tracking and analytics. It&apos;s deployed live on Render and Vercel, handling real authentication, real data, and real users.
             </p>
             <a href="#" className="text-signal text-sm font-semibold hover:underline">View full résumé ↗</a>
           </section>
@@ -48,19 +40,32 @@ export default async function Home() {
             {projects.length === 0 ? (
               <p className="text-muted text-sm">No published projects yet.</p>
             ) : (
-              <div className="space-y-8 mb-6">
-                {projects.map((project) => (
-                  <div key={project.id} className="flex gap-5">
-                    <div className="w-24 h-16 shrink-0 bg-panel rounded-md border border-white/5"></div>
-                    <div>
-                      <h3 className="font-semibold text-paper mb-1">{project.title}</h3>
-                      <p className="text-sm text-muted">{project.description}</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="space-y-8">
+                {projects.map((project) => {
+                  const link = project.demo_url || project.github_url || "";
+                  const isFuel = project.slug.includes("fuel");
+                  return (
+                    
+                      key={project.id}
+                      href={link || undefined}
+                      target={link ? "_blank" : undefined}
+                      rel={link ? "noopener noreferrer" : undefined}
+                      className="flex gap-5 group"
+                    >
+                      <div className="w-24 h-16 shrink-0 bg-panel rounded-md border border-white/5 flex items-center justify-center text-signal">
+                        {isFuel ? <Fuel size={24} /> : <Globe size={24} />}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-paper mb-1 group-hover:text-signal transition-colors">
+                          {project.title}{link ? " ↗" : ""}
+                        </h3>
+                        <p className="text-sm text-muted">{project.description}</p>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             )}
-            <a href="/projects" className="text-signal text-sm font-semibold hover:underline">View full project archive →</a>
           </section>
 
           <section id="writing" className="mb-16">
@@ -90,7 +95,7 @@ export default async function Home() {
           </section>
 
           <footer className="text-xs text-muted pb-10">
-            Designed and built by Shamalah Chibeu. Coded with FastAPI, Next.js and Tailwind CSS.
+            Designed and built by Shamallah Chibeu. Coded with FastAPI, Next.js and Tailwind CSS.
           </footer>
 
         </div>
