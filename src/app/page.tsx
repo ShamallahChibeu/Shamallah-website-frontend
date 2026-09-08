@@ -45,13 +45,7 @@ export default async function Home() {
                   const link = project.demo_url || project.github_url || "";
                   const isFuel = project.slug.includes("fuel");
                   return (
-                    
-                      key={project.id}
-                      href={link || undefined}
-                      target={link ? "_blank" : undefined}
-                      rel={link ? "noopener noreferrer" : undefined}
-                      className="flex gap-5 group"
-                    >
+                    <a key={project.id} href={link || undefined} target={link ? "_blank" : undefined} rel={link ? "noopener noreferrer" : undefined} className="flex gap-5 group">
                       <div className="w-24 h-16 shrink-0 bg-panel rounded-md border border-white/5 flex items-center justify-center text-signal">
                         {isFuel ? <Fuel size={24} /> : <Globe size={24} />}
                       </div>
