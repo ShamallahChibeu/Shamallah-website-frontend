@@ -10,9 +10,9 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-ink text-paper">
-      <div className="flex flex-col lg:flex-row max-w-[1100px] mx-auto">
+      <div className="flex flex-col md:flex-row max-w-[1100px] mx-auto">
         <Sidebar />
-        <div className="flex-1 lg:ml-[340px] px-6 py-16 md:px-12 max-w-2xl">
+        <div className="flex-1 md:ml-[340px] px-6 py-16 md:px-12 max-w-2xl">
 
           <section id="about" className="mb-16">
             <div className="text-xs tracking-widest font-semibold text-signal mb-5">ABOUT</div>
@@ -29,9 +29,20 @@ export default async function Home() {
 
           <section id="experience" className="mb-16">
             <div className="text-xs tracking-widest font-semibold text-signal mb-5">EXPERIENCE</div>
-            <p className="text-paper/80 leading-relaxed mb-6">
-              I designed and built this full-stack content management system from the ground up — a FastAPI backend with JWT authentication and a PostgreSQL database, a Next.js frontend, and an admin dashboard with visit tracking and analytics. It&apos;s deployed live on Render and Vercel, handling real authentication, real data, and real users.
-            </p>
+            <div className="flex gap-6 mb-6">
+              <div className="w-24 md:w-28 shrink-0 text-xs text-muted pt-1">2026 — PRESENT</div>
+              <div>
+                <h3 className="font-semibold text-paper mb-2">Self-Directed Full-Stack &amp; ML Development</h3>
+                <p className="text-paper/80 leading-relaxed mb-4">
+                  Designed and built this full-stack content management system from the ground up — a FastAPI backend with JWT authentication and a PostgreSQL database, a Next.js frontend, and an admin dashboard with visit tracking and analytics. Deployed live on Render and Vercel, handling real authentication, real data, and real users.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["Python", "FastAPI", "PostgreSQL", "Next.js", "JWT Auth"].map((tag) => (
+                    <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-panel text-accent-green border border-white/5">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
             <a href="#" className="text-signal text-sm font-semibold hover:underline">View full résumé ↗</a>
           </section>
 
@@ -44,6 +55,7 @@ export default async function Home() {
                 {projects.map((project) => {
                   const link = project.demo_url || project.github_url || "";
                   const isFuel = project.slug.includes("fuel");
+                  const tags = isFuel ? ["HTML", "JavaScript", "Netlify"] : ["FastAPI", "Next.js", "PostgreSQL"];
                   return (
                     <a key={project.id} href={link || undefined} target={link ? "_blank" : undefined} rel={link ? "noopener noreferrer" : undefined} className="flex gap-5 group">
                       <div className="w-24 h-16 shrink-0 bg-panel rounded-md border border-white/5 flex items-center justify-center text-signal">
@@ -53,7 +65,12 @@ export default async function Home() {
                         <h3 className="font-semibold text-paper mb-1 group-hover:text-signal transition-colors">
                           {project.title}{link ? " ↗" : ""}
                         </h3>
-                        <p className="text-sm text-muted">{project.description}</p>
+                        <p className="text-sm text-muted mb-2">{project.description}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {tags.map((tag) => (
+                            <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-panel text-accent-green border border-white/5">{tag}</span>
+                          ))}
+                        </div>
                       </div>
                     </a>
                   );

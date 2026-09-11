@@ -2,7 +2,7 @@ import { MessageCircle, Phone, Mail } from "lucide-react";
 
 export default function Sidebar() {
   return (
-    <aside className="lg:fixed lg:top-0 lg:left-0 lg:h-screen lg:w-[340px] px-6 py-16 md:px-12 lg:px-16 flex flex-col justify-between">
+    <aside className="md:fixed md:top-0 md:left-0 md:h-screen md:w-[340px] px-6 py-16 md:px-12 md:px-16 flex flex-col justify-between">
       <div>
         <h1 className="text-2xl font-bold text-paper mb-1">Shamallah Blessing Chibeu</h1>
         <h2 className="text-sm text-paper/80 mb-4">Aspiring Machine Learning Engineer &amp; Full-Stack Developer</h2>
@@ -13,7 +13,7 @@ export default function Sidebar() {
           <a href="#projects" className="text-xs font-semibold px-4 py-2 rounded border border-signal text-signal hover:bg-signal hover:text-ink transition-colors">View my projects</a>
           <a href="#contact" className="text-xs font-semibold px-4 py-2 rounded border border-white/20 text-paper/80 hover:border-white/40 transition-colors">Contact me</a>
         </div>
-        <ul className="hidden lg:block space-y-4 text-xs tracking-widest font-semibold text-paper/70 mb-10">
+        <ul className="hidden md:block space-y-4 text-xs tracking-widest font-semibold text-paper/70 mb-10">
           <li><a href="#about" className="hover:text-signal transition-colors">ABOUT</a></li>
           <li><a href="#experience" className="hover:text-signal transition-colors">EXPERIENCE</a></li>
           <li><a href="#projects" className="hover:text-signal transition-colors">PROJECTS</a></li>

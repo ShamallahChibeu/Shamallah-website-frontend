@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #10151b;
-  --panel: #171f29;
-  --paper: #e7e9ee;
-  --muted: #8b95a5;
-  --signal: #e8a33d;
-  --accent-green: #6fb98f;
+  --ink: #05070f;
+  --panel: #0d1220;
+  --paper: #e4e8f0;
+  --muted: #6b7386;
+  --signal: #4f8cff;
+  --accent-green: #38bdf8;
 }
 
 @theme inline {
@@ -22,13 +22,4 @@ body {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-body), sans-serif;
-}
-
-@keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-.cursor {
-  animation: blink 1s step-end infinite;
 }
