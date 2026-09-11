@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 import { API_URL } from "@/lib/api";
 import { saveToken } from "@/lib/auth";
 
@@ -9,6 +10,7 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +47,12 @@ export default function AdminLoginPage() {
           </div>
           <div>
             <label className="block text-xs text-muted mb-1">Password</label>
-            <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-ink border border-white/10 rounded px-3 py-2 text-paper focus:outline-none focus:border-signal" />
+            <div className="relative">
+              <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-ink border border-white/10 rounded px-3 py-2 pr-10 text-paper focus:outline-none focus:border-signal" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? "Hide password" : "Show password"} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-paper transition-colors">
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
           {error && <p className="text-red-400 text-xs">{error}</p>}
           <button type="submit" disabled={loading} className="w-full bg-signal text-ink font-semibold rounded px-4 py-2 hover:opacity-90 transition-opacity disabled:opacity-50">
