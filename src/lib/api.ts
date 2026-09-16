@@ -6,6 +6,8 @@ export interface Project {
   content?: string;
   github_url?: string;
   demo_url?: string;
+  image_url?: string;
+  tags?: string;
   status: string;
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { API_URL } from "@/lib/api";
 import { getToken } from "@/lib/auth";
+import ImageUpload from "@/components/ImageUpload";
 
 export default function EditProjectPage() {
   const router = useRouter();
@@ -15,6 +16,8 @@ export default function EditProjectPage() {
   const [content, setContent] = useState("");
   const [githubUrl, setGithubUrl] = useState("");
   const [demoUrl, setDemoUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [tags, setTags] = useState("");
   const [status, setStatus] = useState("draft");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,6 +34,8 @@ export default function EditProjectPage() {
         setContent(data.content || "");
         setGithubUrl(data.github_url || "");
         setDemoUrl(data.demo_url || "");
+        setImageUrl(data.image_url || "");
+        setTags(data.tags || "");
         setStatus(data.status);
       }
       setFetching(false);
@@ -47,7 +52,7 @@ export default function EditProjectPage() {
       const res = await fetch(`${API_URL}/projects/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ title, slug, description, content, github_url: githubUrl, demo_url: demoUrl, status }),
+        body: JSON.stringify({ title, slug, description, content, github_url: githubUrl, demo_url: demoUrl, image_url: imageUrl, tags, status }),
       });
       if (!res.ok) throw new Error("Failed to update project");
       router.push("/admin");
@@ -90,6 +95,14 @@ export default function EditProjectPage() {
         <div>
           <label className="block text-xs text-muted mb-1">Live demo URL</label>
           <input value={demoUrl} onChange={(e) => setDemoUrl(e.target.value)} className="w-full bg-panel border border-white/10 rounded px-3 py-2 text-paper focus:outline-none focus:border-signal" />
+        </div>
+        <div>
+          <label className="block text-xs text-muted mb-1">Project image</label>
+          <ImageUpload value={imageUrl} onChange={setImageUrl} />
+        </div>
+        <div>
+          <label className="block text-xs text-muted mb-1">Tags (comma-separated, e.g. FastAPI, Next.js, PostgreSQL)</label>
+          <input value={tags} onChange={(e) => setTags(e.target.value)} className="w-full bg-panel border border-white/10 rounded px-3 py-2 text-paper focus:outline-none focus:border-signal" />
         </div>
         <div>
           <label className="block text-xs text-muted mb-1">Status</label>

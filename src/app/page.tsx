@@ -57,19 +57,25 @@ export default async function Home() {
                 {projects.map((project) => {
                   const link = project.demo_url || project.github_url || "";
                   const isFuel = project.slug.includes("fuel");
-                  const tags = isFuel ? ["HTML", "JavaScript", "Netlify"] : ["FastAPI", "Next.js", "PostgreSQL"];
+                  const tagList = project.tags
+                    ? project.tags.split(",").map((t) => t.trim()).filter(Boolean)
+                    : (isFuel ? ["HTML", "JavaScript", "Netlify"] : ["FastAPI", "Next.js", "PostgreSQL"]);
                   return (
                     <a key={project.id} href={link || undefined} target={link ? "_blank" : undefined} rel={link ? "noopener noreferrer" : undefined} className="flex gap-5 group">
-                      <div className="w-24 h-16 shrink-0 bg-panel rounded-md border border-white/5 flex items-center justify-center text-signal">
-                        {isFuel ? <Fuel size={24} /> : <Globe size={24} />}
-                      </div>
+                      {project.image_url ? (
+                        <img src={project.image_url} alt={project.title} className="w-24 h-16 shrink-0 object-cover rounded-md border border-white/5" />
+                      ) : (
+                        <div className="w-24 h-16 shrink-0 bg-panel rounded-md border border-white/5 flex items-center justify-center text-signal">
+                          {isFuel ? <Fuel size={24} /> : <Globe size={24} />}
+                        </div>
+                      )}
                       <div>
                         <h3 className="font-semibold text-paper mb-1 group-hover:text-signal transition-colors">
                           {project.title}{link ? " ↗" : ""}
                         </h3>
                         <p className="text-sm text-muted mb-2">{project.description}</p>
                         <div className="flex flex-wrap gap-2">
-                          {tags.map((tag) => (
+                          {tagList.map((tag) => (
                             <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-panel text-accent-green border border-white/5">{tag}</span>
                           ))}
                         </div>
