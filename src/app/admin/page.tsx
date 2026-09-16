@@ -66,6 +66,13 @@ export default function AdminDashboard() {
     setExperiences(experiences.filter((e) => e.id !== id));
   }
 
+  async function handleDeleteMessage(id: number) {
+    if (!confirm("Delete this message?")) return;
+    const token = getToken();
+    await fetch(`${API_URL}/messages/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
+    setMessages(messages.filter((m) => m.id !== id));
+  }
+
   function handleLogout() {
     clearToken();
     router.push("/admin/login");
@@ -173,9 +180,13 @@ export default function AdminDashboard() {
                 <span className="text-muted text-xs">{new Date(m.created_at).toLocaleDateString()}</span>
               </button>
               {expandedMessageId === m.id && (
-                <div className="pb-4 px-1 text-sm text-paper/80 space-y-1">
+                <div className="pb-4 px-1 text-sm text-paper/80 space-y-3">
                   <p className="text-muted text-xs">{m.email}</p>
                   <p className="leading-relaxed">{m.message}</p>
+                  <div className="flex gap-4 pt-1">
+                    <a href={`mailto:${m.email}?subject=${encodeURIComponent("Re: " + (m.subject || "your message"))}`} className="text-signal text-xs hover:underline">Reply</a>
+                    <button onClick={() => handleDeleteMessage(m.id)} className="text-red-400 text-xs hover:underline">Delete</button>
+                  </div>
                 </div>
               )}
             </div>
