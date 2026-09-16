@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { API_URL } from "@/lib/api";
 import { getToken } from "@/lib/auth";
+import FileUpload from "@/components/FileUpload";
 
 export default function NewPostPage() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function NewPostPage() {
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
   const [status, setStatus] = useState("draft");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +27,7 @@ export default function NewPostPage() {
       const res = await fetch(`${API_URL}/posts`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ title, slug, excerpt, content, cover_image: coverImage, status }),
+        body: JSON.stringify({ title, slug, excerpt, content, cover_image: coverImage, file_url: fileUrl, status }),
       });
       if (!res.ok) throw new Error("Failed to create post");
       router.push("/admin");
@@ -60,6 +62,10 @@ export default function NewPostPage() {
         <div>
           <label className="block text-xs text-muted mb-1">Cover image URL</label>
           <input value={coverImage} onChange={(e) => setCoverImage(e.target.value)} className="w-full bg-panel border border-white/10 rounded px-3 py-2 text-paper focus:outline-none focus:border-signal" />
+        </div>
+        <div>
+          <label className="block text-xs text-muted mb-1">Attach a file (PDF or document)</label>
+          <FileUpload value={fileUrl} onChange={setFileUrl} />
         </div>
         <div>
           <label className="block text-xs text-muted mb-1">Status</label>

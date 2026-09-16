@@ -17,6 +17,7 @@ export interface Post {
   slug: string;
   excerpt?: string;
   content?: string;
+  file_url?: string;
   status: string;
 }
 

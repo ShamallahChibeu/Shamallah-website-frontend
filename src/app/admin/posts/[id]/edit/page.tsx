@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { API_URL } from "@/lib/api";
 import { getToken } from "@/lib/auth";
+import FileUpload from "@/components/FileUpload";
 
 export default function EditPostPage() {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function EditPostPage() {
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
   const [status, setStatus] = useState("draft");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,6 +31,7 @@ export default function EditPostPage() {
         setExcerpt(data.excerpt || "");
         setContent(data.content || "");
         setCoverImage(data.cover_image || "");
+        setFileUrl(data.file_url || "");
         setStatus(data.status);
       }
       setFetching(false);
@@ -45,7 +48,7 @@ export default function EditPostPage() {
       const res = await fetch(`${API_URL}/posts/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ title, slug, excerpt, content, cover_image: coverImage, status }),
+        body: JSON.stringify({ title, slug, excerpt, content, cover_image: coverImage, file_url: fileUrl, status }),
       });
       if (!res.ok) throw new Error("Failed to update post");
       router.push("/admin");
@@ -84,6 +87,10 @@ export default function EditPostPage() {
         <div>
           <label className="block text-xs text-muted mb-1">Cover image URL</label>
           <input value={coverImage} onChange={(e) => setCoverImage(e.target.value)} className="w-full bg-panel border border-white/10 rounded px-3 py-2 text-paper focus:outline-none focus:border-signal" />
+        </div>
+        <div>
+          <label className="block text-xs text-muted mb-1">Attach a file (PDF or document)</label>
+          <FileUpload value={fileUrl} onChange={setFileUrl} />
         </div>
         <div>
           <label className="block text-xs text-muted mb-1">Status</label>
