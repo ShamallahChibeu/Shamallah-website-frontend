@@ -1,6 +1,8 @@
 import { getProjects, getPosts } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
+import ResumeLink from "@/components/ResumeLink";
 import { Fuel, Globe } from "lucide-react";
+import Link from "next/link";
 
 export default async function Home() {
   const allProjects = await getProjects();
@@ -43,7 +45,7 @@ export default async function Home() {
                 </div>
               </div>
             </div>
-            <a href="#" className="text-signal text-sm font-semibold hover:underline">View full résumé ↗</a>
+            <ResumeLink />
           </section>
 
           <section id="projects" className="mb-16">
@@ -86,23 +88,15 @@ export default async function Home() {
             ) : (
               <div className="space-y-6">
                 {posts.map((post) => (
-                  <div key={post.id} className="flex gap-5">
+                  <Link key={post.id} href={`/blog/${post.slug}`} className="flex gap-5 group">
                     <div className="w-20 h-14 shrink-0 bg-panel rounded-md border border-white/5"></div>
                     <div>
-                      <h3 className="font-semibold text-paper">{post.title}</h3>
+                      <h3 className="font-semibold text-paper group-hover:text-signal transition-colors">{post.title} ↗</h3>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
-          </section>
-
-          <section id="contact" className="mb-16">
-            <div className="text-xs tracking-widest font-semibold text-signal mb-5">CONTACT</div>
-            <p className="text-paper/80 leading-relaxed mb-6 max-w-md">
-              I&apos;m always open to discussing new projects or opportunities. Reach out through any of the icons above, or send a message directly.
-            </p>
-            <a href="/contact" className="text-signal text-sm font-semibold hover:underline">Get in touch →</a>
           </section>
 
           <footer className="text-xs text-muted pb-10">

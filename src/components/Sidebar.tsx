@@ -11,14 +11,14 @@ export default function Sidebar() {
         </p>
         <div className="flex gap-3 mb-10">
           <a href="#projects" className="text-xs font-semibold px-4 py-2 rounded border border-signal text-signal hover:bg-signal hover:text-ink transition-colors">View my projects</a>
-          <a href="#contact" className="text-xs font-semibold px-4 py-2 rounded border border-white/20 text-paper/80 hover:border-white/40 transition-colors">Contact me</a>
+          <a href="/contact" className="text-xs font-semibold px-4 py-2 rounded border border-white/20 text-paper/80 hover:border-white/40 transition-colors">Contact me</a>
         </div>
         <ul className="hidden md:block space-y-4 text-xs tracking-widest font-semibold text-paper/70 mb-10">
           <li><a href="#about" className="hover:text-signal transition-colors">ABOUT</a></li>
           <li><a href="#experience" className="hover:text-signal transition-colors">EXPERIENCE</a></li>
           <li><a href="#projects" className="hover:text-signal transition-colors">PROJECTS</a></li>
           <li><a href="#writing" className="hover:text-signal transition-colors">WRITING</a></li>
-          <li><a href="#contact" className="hover:text-signal transition-colors">CONTACT</a></li>
+          <li><a href="/contact" className="hover:text-signal transition-colors">CONTACT</a></li>
         </ul>
       </div>
       <div className="flex gap-4 text-muted">

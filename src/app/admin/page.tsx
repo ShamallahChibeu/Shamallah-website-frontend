@@ -20,6 +20,7 @@ export default function AdminDashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedMessageId, setExpandedMessageId] = useState<number | null>(null);
 
   useEffect(() => {
     const token = getToken();
@@ -58,6 +59,10 @@ export default function AdminDashboard() {
   function handleLogout() {
     clearToken();
     router.push("/admin/login");
+  }
+
+  function toggleMessage(id: number) {
+    setExpandedMessageId(expandedMessageId === id ? null : id);
   }
 
   if (loading) {
@@ -127,17 +132,23 @@ export default function AdminDashboard() {
 
       <div className="bg-panel border border-white/10 rounded-lg p-6 max-w-3xl">
         <h2 className="text-sm font-semibold mb-4">Messages</h2>
-        <table className="w-full text-sm">
-          <tbody>
-            {messages.map((m) => (
-              <tr key={m.id} className="border-b border-white/5">
-                <td className="py-3 text-paper/90">{m.name}</td>
-                <td className="py-3 text-muted">{m.subject || "-"}</td>
-                <td className="py-3 text-muted text-xs">{new Date(m.created_at).toLocaleDateString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div>
+          {messages.map((m) => (
+            <div key={m.id} className="border-b border-white/5">
+              <button onClick={() => toggleMessage(m.id)} className="w-full flex justify-between items-center py-3 text-left">
+                <span className="text-paper/90 text-sm">{m.name}</span>
+                <span className="text-muted text-sm">{m.subject || "-"}</span>
+                <span className="text-muted text-xs">{new Date(m.created_at).toLocaleDateString()}</span>
+              </button>
+              {expandedMessageId === m.id && (
+                <div className="pb-4 px-1 text-sm text-paper/80 space-y-1">
+                  <p className="text-muted text-xs">{m.email}</p>
+                  <p className="leading-relaxed">{m.message}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   );
