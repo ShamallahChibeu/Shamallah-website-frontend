@@ -1,4 +1,4 @@
-import { getProjects, getPosts } from "@/lib/api";
+import { getProjects, getPosts, getExperiences } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
 import ResumeLink from "@/components/ResumeLink";
 import { Fuel, Globe } from "lucide-react";
@@ -7,8 +7,10 @@ import Link from "next/link";
 export default async function Home() {
   const allProjects = await getProjects();
   const allPosts = await getPosts();
+  const allExperiences = await getExperiences();
   const projects = allProjects.filter((p) => p.status === "published");
   const posts = allPosts.filter((p) => p.status === "published");
+  const experiences = allExperiences.filter((e) => e.status === "published");
 
   return (
     <main className="min-h-screen bg-ink text-paper">
@@ -31,20 +33,31 @@ export default async function Home() {
 
           <section id="experience" className="mb-16">
             <div className="text-xs tracking-widest font-semibold text-signal mb-5">EXPERIENCE</div>
-            <div className="flex gap-6 mb-6">
-              <div className="w-24 md:w-28 shrink-0 text-xs text-muted pt-1">2026 — PRESENT</div>
-              <div>
-                <h3 className="font-semibold text-paper mb-2">Self-Directed Full-Stack &amp; ML Development</h3>
-                <p className="text-paper/80 leading-relaxed mb-4">
-                  Designed and built this full-stack content management system from the ground up — a FastAPI backend with JWT authentication and a PostgreSQL database, a Next.js frontend, and an admin dashboard with visit tracking and analytics. Deployed live on Render and Vercel, handling real authentication, real data, and real users.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["Python", "FastAPI", "PostgreSQL", "Next.js", "JWT Auth"].map((tag) => (
-                    <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-panel text-accent-green border border-white/5">{tag}</span>
-                  ))}
-                </div>
+            {experiences.length === 0 ? (
+              <p className="text-muted text-sm">No experience entries yet.</p>
+            ) : (
+              <div className="space-y-6 mb-6">
+                {experiences.map((exp) => {
+                  const tagList = exp.tags ? exp.tags.split(",").map((t) => t.trim()).filter(Boolean) : [];
+                  return (
+                    <div key={exp.id} className="flex gap-6">
+                      <div className="w-24 md:w-28 shrink-0 text-xs text-muted pt-1">{exp.date_range}</div>
+                      <div>
+                        <h3 className="font-semibold text-paper mb-2">{exp.title}</h3>
+                        {exp.description && <p className="text-paper/80 leading-relaxed mb-4">{exp.description}</p>}
+                        {tagList.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {tagList.map((tag) => (
+                              <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-panel text-accent-green border border-white/5">{tag}</span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            </div>
+            )}
             <ResumeLink />
           </section>
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { API_URL, type Project, type Post } from "@/lib/api";
+import { API_URL, type Project, type Post, type Experience } from "@/lib/api";
 import { getToken, clearToken } from "@/lib/auth";
 
 interface Message {
@@ -18,6 +18,7 @@ export default function AdminDashboard() {
   const router = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
+  const [experiences, setExperiences] = useState<Experience[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedMessageId, setExpandedMessageId] = useState<number | null>(null);
@@ -29,13 +30,15 @@ export default function AdminDashboard() {
       return;
     }
     async function load() {
-      const [projRes, postRes, msgRes] = await Promise.all([
+      const [projRes, postRes, expRes, msgRes] = await Promise.all([
         fetch(`${API_URL}/projects`, { cache: "no-store" }),
         fetch(`${API_URL}/posts`, { cache: "no-store" }),
+        fetch(`${API_URL}/experiences`, { cache: "no-store" }),
         fetch(`${API_URL}/messages`, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" }),
       ]);
       if (projRes.ok) setProjects(await projRes.json());
       if (postRes.ok) setPosts(await postRes.json());
+      if (expRes.ok) setExperiences(await expRes.json());
       if (msgRes.ok) setMessages(await msgRes.json());
       setLoading(false);
     }
@@ -54,6 +57,13 @@ export default function AdminDashboard() {
     const token = getToken();
     await fetch(`${API_URL}/posts/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
     setPosts(posts.filter((p) => p.id !== id));
+  }
+
+  async function handleDeleteExperience(id: number) {
+    if (!confirm("Delete this experience entry?")) return;
+    const token = getToken();
+    await fetch(`${API_URL}/experiences/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
+    setExperiences(experiences.filter((e) => e.id !== id));
   }
 
   function handleLogout() {
@@ -79,7 +89,11 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mb-10 max-w-lg">
+      <div className="grid grid-cols-4 gap-4 mb-10 max-w-2xl">
+        <div className="bg-panel border border-white/10 rounded-lg p-5">
+          <div className="text-2xl font-bold text-signal">{experiences.length}</div>
+          <div className="text-xs text-muted mt-1">Experience</div>
+        </div>
         <div className="bg-panel border border-white/10 rounded-lg p-5">
           <div className="text-2xl font-bold text-signal">{projects.length}</div>
           <div className="text-xs text-muted mt-1">Projects</div>
@@ -92,6 +106,24 @@ export default function AdminDashboard() {
           <div className="text-2xl font-bold text-signal">{messages.length}</div>
           <div className="text-xs text-muted mt-1">Messages</div>
         </div>
+      </div>
+
+      <div className="bg-panel border border-white/10 rounded-lg p-6 mb-6 max-w-3xl">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-sm font-semibold">Experience</h2>
+          <a href="/admin/experiences/new" className="text-signal text-sm hover:underline">+ New experience</a>
+        </div>
+        <table className="w-full text-sm">
+          <tbody>
+            {experiences.map((exp) => (
+              <tr key={exp.id} className="border-b border-white/5">
+                <td className="py-3 text-paper/90">{exp.title}</td>
+                <td className="py-3"><span className={exp.status === "published" ? "text-xs px-2 py-1 rounded-full bg-green-900/40 text-green-400" : "text-xs px-2 py-1 rounded-full bg-yellow-900/40 text-yellow-400"}>{exp.status}</span></td>
+                <td className="py-3 text-right"><a href={`/admin/experiences/${exp.id}/edit`} className="text-signal text-xs hover:underline mr-4">Edit</a><button onClick={() => handleDeleteExperience(exp.id)} className="text-red-400 text-xs hover:underline">Delete</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <div className="bg-panel border border-white/10 rounded-lg p-6 mb-6 max-w-3xl">

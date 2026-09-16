@@ -20,6 +20,15 @@ export interface Post {
   status: string;
 }
 
+export interface Experience {
+  id: number;
+  title: string;
+  date_range: string;
+  description?: string;
+  tags?: string;
+  status: string;
+}
+
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export async function getProjects(): Promise<Project[]> {
@@ -42,4 +51,10 @@ export async function getPosts(): Promise<Post[]> {
 export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   const posts = await getPosts();
   return posts.find((p) => p.slug === slug);
+}
+
+export async function getExperiences(): Promise<Experience[]> {
+  const res = await fetch(`${API_URL}/experiences`, { cache: "no-store" });
+  if (!res.ok) return [];
+  return res.json();
 }
