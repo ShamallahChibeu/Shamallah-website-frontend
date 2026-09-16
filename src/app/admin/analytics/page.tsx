@@ -16,6 +16,8 @@ interface Analytics {
   online_now: number;
   top_pages: TopPage[];
   total_messages: number;
+  total_social_clicks: number;
+  success_rate: number;
 }
 
 export default function AnalyticsPage() {
@@ -46,7 +48,7 @@ export default function AnalyticsPage() {
       <a href="/admin" className="text-signal text-sm hover:underline">← Back to dashboard</a>
       <h1 className="text-xl font-semibold mt-6 mb-8">Analytics</h1>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 max-w-3xl">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6 max-w-3xl">
         <div className="bg-panel border border-white/10 rounded-lg p-5">
           <div className="text-2xl font-bold text-signal">{data.online_now}</div>
           <div className="text-xs text-muted mt-1">Online now</div>
@@ -57,11 +59,19 @@ export default function AnalyticsPage() {
         </div>
         <div className="bg-panel border border-white/10 rounded-lg p-5">
           <div className="text-2xl font-bold text-signal">{data.unique_visitors}</div>
-          <div className="text-xs text-muted mt-1">Unique visitors</div>
+          <div className="text-xs text-muted mt-1">Unique visitors (by IP)</div>
         </div>
         <div className="bg-panel border border-white/10 rounded-lg p-5">
           <div className="text-2xl font-bold text-signal">{data.total_messages}</div>
           <div className="text-xs text-muted mt-1">Messages received</div>
+        </div>
+        <div className="bg-panel border border-white/10 rounded-lg p-5">
+          <div className="text-2xl font-bold text-signal">{data.total_social_clicks}</div>
+          <div className="text-xs text-muted mt-1">Social clicks</div>
+        </div>
+        <div className="bg-panel border border-white/10 rounded-lg p-5">
+          <div className="text-2xl font-bold text-signal">{data.success_rate}%</div>
+          <div className="text-xs text-muted mt-1">Success rate</div>
         </div>
       </div>
 
