@@ -17,7 +17,7 @@ export default function Sidebar() {
     <aside className="md:fixed md:top-0 md:left-0 md:h-screen md:w-[340px] px-6 py-16 md:px-12 md:px-16 flex flex-col justify-between">
       <div>
         <h1 className="text-2xl font-bold text-paper mb-1">Shamallah Blessing Chibeu</h1>
-        <h2 className="text-sm text-paper/80 mb-4">Aspiring Machine Learning Engineer &amp; Full-Stack Developer</h2>
+        <h2 className="text-sm text-paper/80 mb-4">Machine Learning Engineer &amp; Full-Stack Developer</h2>
         <p className="text-sm text-muted leading-relaxed max-w-xs mb-6">
           I build practical software that turns real-world problems into useful digital solutions.
         </p>
