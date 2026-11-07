@@ -16,6 +16,7 @@ export default function Sidebar() {
   return (
     <aside className="md:fixed md:top-0 md:left-0 md:h-screen md:w-[340px] px-6 py-16 md:px-12 md:px-16 flex flex-col justify-between">
       <div>
+        <img src="/brand/shamallah-logo-horizontal.svg" alt="shamallah.dev" className="w-52 mb-8" />
         <h1 className="text-2xl font-bold text-paper mb-1">Shamallah Blessing Chibeu</h1>
         <h2 className="text-sm text-paper/80 mb-4">Machine Learning Engineer &amp; Full-Stack Developer</h2>
         <p className="text-sm text-muted leading-relaxed max-w-xs mb-6">
